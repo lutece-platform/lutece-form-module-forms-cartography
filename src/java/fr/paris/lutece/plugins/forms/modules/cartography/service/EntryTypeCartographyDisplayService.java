@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2022, City of Paris
+ * Copyright (c) 2002-2023, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,8 +63,8 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
 {
     private static final String MARK_ENTRY_TYPE_SERVICE = "entryTypeService";
     private String _strEntryServiceName = StringUtils.EMPTY;
-    
- /**
+
+    /**
      * Constructor of the EntryTypeDefaultDisplayService
      * 
      * @param strEntryServiceName
@@ -88,13 +88,13 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
     {
         model.put( FormsConstants.QUESTION_ENTRY_MARKER, entry );
         Field mapProvider = entry.getFieldByCode( "provider" );
-        
-        //Charger map
-        Optional <MapTemplate> map = MapTemplateHome.findByPrimaryKey( Integer.valueOf( mapProvider.getValue( ) )  ) ;
-        
+
+        // Charger map
+        Optional<MapTemplate> map = MapTemplateHome.findByPrimaryKey( Integer.valueOf( mapProvider.getValue( ) ) );
+
         if ( map.isPresent( ) )
         {
-        	CartographyService.loadMapAndPoints( map.get( ), model );
+            CartographyService.loadMapAndPoints( map.get( ), model );
         }
 
         return model;
