@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.forms.modules.cartography.service;
 
 import fr.paris.lutece.plugins.carto.business.MapTemplate;
 import fr.paris.lutece.plugins.carto.business.MapTemplateHome;
+import fr.paris.lutece.plugins.cartography.modules.solr.service.CartographyService;
 import fr.paris.lutece.plugins.forms.business.form.column.IFormColumn;
 import fr.paris.lutece.plugins.forms.business.form.column.impl.FormColumnEntryCartography;
 import fr.paris.lutece.plugins.forms.util.FormsConstants;
@@ -53,7 +54,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
-import fr.paris.lutece.plugins.modules.cartography.solr.service.CartographyService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 
 /**
