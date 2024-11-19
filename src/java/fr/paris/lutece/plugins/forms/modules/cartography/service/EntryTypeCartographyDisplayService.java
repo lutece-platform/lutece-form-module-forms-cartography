@@ -54,6 +54,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 
+import fr.paris.lutece.portal.service.security.LuteceUser;
+import fr.paris.lutece.portal.service.security.SecurityService;
+import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 
 /**
@@ -62,6 +65,7 @@ import fr.paris.lutece.portal.service.template.AppTemplateService;
 public class EntryTypeCartographyDisplayService implements IEntryDisplayService
 {
     private static final String MARK_ENTRY_TYPE_SERVICE = "entryTypeService";
+    private static final String MARK_USER = "user";
     private String _strEntryServiceName = StringUtils.EMPTY;
 
     /**
@@ -84,7 +88,7 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
      *            The given model
      * @return the completed model
      */
-    private Map<String, Object> setModel( Entry entry, Map<String, Object> model )
+    private Map<String, Object> setModel( Entry entry, HttpServletRequest request, DisplayType displayType, Map<String, Object> model )
     {
         model.put( FormsConstants.QUESTION_ENTRY_MARKER, entry );
         Field mapProvider = entry.getFieldByCode( "provider" );
@@ -92,12 +96,50 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
         // Charger map
         Optional<MapTemplate> map = MapTemplateHome.findByPrimaryKey( Integer.valueOf( mapProvider.getValue( ) ) );
 
-        if ( map.isPresent( ) )
+        if ( displayType.isFront( ) )
         {
-            CartographyService.loadMapAndPoints( map.get( ), model );
+            LuteceUser user = findLuteceUserFrom( request );
+            model.put( MARK_USER, user );
+            if ( map.isPresent( ) )
+            {
+                CartographyService.loadMapAndPoints( map.get( ), model, user );
+            }
+        }
+        else
+        {
+        	if ( map.isPresent( ) )
+            {
+                CartographyService.loadMapAndPoints( map.get( ), model, null );
+            }
         }
 
         return model;
+    }
+    
+    /**
+     * Finds the LuteceUser associated to the request
+     * 
+     * @param request
+     *            The request to retrieve the LuteceUser from
+     * @return the LuteceUser of the request
+     */
+    private static LuteceUser findLuteceUserFrom( HttpServletRequest request )
+    {
+        LuteceUser user = SecurityService.getInstance( ).getRegisteredUser( request );
+
+        if ( user == null && SecurityService.isAuthenticationEnable( ) && SecurityService.getInstance( ).isExternalAuthentication( ) )
+        {
+            try
+            {
+                user = SecurityService.getInstance( ).getRemoteUser( request );
+            }
+            catch( UserNotSignedException e )
+            {
+                // Nothing to do : lutece user is not mandatory
+            }
+        }
+
+        return user;
     }
 
     /**
@@ -121,12 +163,12 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
         switch( displayType.getMode( ) )
         {
             case EDITION:
-                strEntryHtml = AppTemplateService.getTemplate( service.getTemplateHtmlForm( entry, displayType.isFront( ) ), locale, setModel( entry, model ) )
+                strEntryHtml = AppTemplateService.getTemplate( service.getTemplateHtmlForm( entry, displayType.isFront( ) ), locale, setModel( entry, request, displayType, model ) )
                         .getHtml( );
                 break;
             case READONLY:
                 model.put( MARK_ENTRY_TYPE_SERVICE, service );
-                strEntryHtml = AppTemplateService.getTemplate( service.getTemplateEntryReadOnly( displayType.isFront( ) ), locale, setModel( entry, model ) )
+                strEntryHtml = AppTemplateService.getTemplate( service.getTemplateEntryReadOnly( displayType.isFront( ) ), locale, setModel( entry, request, displayType, model ) )
                         .getHtml( );
                 break;
             default: // Nothing to do
