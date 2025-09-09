@@ -30,13 +30,13 @@
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>module-cartography-solr</artifactId>
-            <version>[1.0.1-SNAPSHOT,)</version>
+            <version>[1.0.1-SNAPSHOT,1.9.9)</version>
             <type>lutece-plugin</type>
         </dependency>
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>plugin-forms</artifactId>
-            <version>[1.0.0-SNAPSHOT,)</version>
+            <version>[1.0.0-SNAPSHOT,3.9.9)</version>
             <type>lutece-plugin</type>
         </dependency>
     </dependencies>
