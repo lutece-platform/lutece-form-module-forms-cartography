@@ -50,18 +50,24 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.portal.service.security.LuteceUser;
 import fr.paris.lutece.portal.service.security.SecurityService;
 import fr.paris.lutece.portal.service.security.UserNotSignedException;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  * The default display service
  */
+@ApplicationScoped
+@Named( "forms.entryTypeCartographyDisplayService" )
 public class EntryTypeCartographyDisplayService implements IEntryDisplayService
 {
     private static final String MARK_ENTRY_TYPE_SERVICE = "entryTypeService";
@@ -74,7 +80,8 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
      * @param strEntryServiceName
      *            The entry service name
      */
-    public EntryTypeCartographyDisplayService( String strEntryServiceName )
+    @Inject
+    public EntryTypeCartographyDisplayService( @ConfigProperty( name = "forms.entryTypeCartographyDisplayService.name" ) String strEntryServiceName )
     {
         _strEntryServiceName = strEntryServiceName;
     }
@@ -182,7 +189,6 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
      * 
      * @param nFormColumnPosition
      * @param strColumnTitle
-     * @param listEntryTitle
      * @return The form column
      */
     @Override
