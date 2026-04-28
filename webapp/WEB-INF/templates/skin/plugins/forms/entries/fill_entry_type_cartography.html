@@ -1,0 +1,8 @@
+<label class="col-12 col-form-label" >${entry.title}<#if entry.mandatory> *</#if></label>
+
+<#include "/skin/plugins/carto/manage_map.html" />
+
+
+<#if entry.helpMessage?exists&&entry.helpMessage!=''>
+	<span class="form-control-plaintext">${entry.helpMessage}</span>
+</#if>

@@ -66,6 +66,7 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
 {
     private static final String MARK_ENTRY_TYPE_SERVICE = "entryTypeService";
     private static final String MARK_USER = "user";
+    private static final String TEMPLATE_FRONT_CARTOGRAPHY = "skin/plugins/forms/entries/fill_entry_type_cartography.html";
     private String _strEntryServiceName = StringUtils.EMPTY;
 
     /**
@@ -163,7 +164,7 @@ public class EntryTypeCartographyDisplayService implements IEntryDisplayService
         switch( displayType.getMode( ) )
         {
             case EDITION:
-                strEntryHtml = AppTemplateService.getTemplate( service.getTemplateHtmlForm( entry, displayType.isFront( ) ), locale, setModel( entry, request, displayType, model ) )
+                strEntryHtml = AppTemplateService.getTemplate( TEMPLATE_FRONT_CARTOGRAPHY, locale, setModel( entry, request, displayType, model ) )
                         .getHtml( );
                 break;
             case READONLY:
