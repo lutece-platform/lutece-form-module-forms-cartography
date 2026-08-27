@@ -36,7 +36,7 @@ package fr.paris.lutece.plugins.forms.modules.cartography.service;
 import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
 
 /**
- * class GenericAttributesOpenStreetMapPlugin
+ * class FormsCartographyPlugin
  */
 public class FormsCartographyPlugin extends PluginDefaultImplementation
 {

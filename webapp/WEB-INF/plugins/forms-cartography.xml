@@ -2,7 +2,7 @@
     
         
     <!-- Plugin Informations -->
-	<name>genericattributes-cartography</name>
+	<name>forms-cartography</name>
 	<class>fr.paris.lutece.plugins.forms.modules.cartography.service.FormsCartographyPlugin</class>
 	<version>1.0.3-SNAPSHOT</version>
 	<description>module.forms.cartography.module.description</description>
