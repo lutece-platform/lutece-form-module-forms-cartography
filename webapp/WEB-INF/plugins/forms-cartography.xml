@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><plug-in>
-	<name>genericattributes-cartography</name>
+	<name>forms-cartography</name>
 	<class>fr.paris.lutece.plugins.forms.modules.cartography.service.FormsCartographyPlugin</class>
 	<version>2.0.1-SNAPSHOT</version>
 	<description>module.forms.cartography.module.description</description>
